@@ -1,11 +1,24 @@
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import Home from "./Page/Home/Home";
+import Main from "./Page/Main/Main";
+import Header from "./Component/Header/Header"
+
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        Task Tracker
-      </header>
+      <BrowserRouter>
+        <Header />
+        <div>
+          <Switch>
+            <Route exact path='/' component={Home} /> {/* 로그인 전  */}
+            <Route path='/main' component={Main} /> {/* 로그인 후  */}
+            <Route path='/admin' component={Main} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }
