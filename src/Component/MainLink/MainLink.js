@@ -10,9 +10,9 @@ function MainLink() {
             "Loading..."
         ) : (
             <ul>
-            {data.map(({ id, url }) => (
-                <li key={`photo-${id}`}>
-                <img alt={url} src={url} />
+            {data.map(({ id, url, description }) => (
+                <li key={`url-${id}`}>
+                    <a href={url}>{description}</a>
                 </li>
             ))}
             </ul>
