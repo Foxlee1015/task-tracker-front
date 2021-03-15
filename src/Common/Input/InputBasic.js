@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 
 const InputBasic = ({
@@ -20,11 +20,11 @@ const InputBasic = ({
         }
     };
 
-    useEffect(() => {
-        if (value) {
-            handleBlur()
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (value) {
+    //         handleBlur()
+    //     }
+    // }, []);
 
     return (
         <div>
