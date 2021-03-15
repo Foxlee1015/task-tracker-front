@@ -2,7 +2,7 @@ import React from "react";
 import useFetch from "../../utils/hooks/useFetch";
 
 function MainLink() {
-    const [data, loading] = useFetch("http://54.180.93.113:16980/links/");
+    const [data, loading] = useFetch("http://54.180.93.113:16980/api/links/");
     return (
       <div>
         <p>MainLink</p>
