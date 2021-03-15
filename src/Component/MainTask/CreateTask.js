@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
 import InputBasic from "../../Common/Input/InputBasic";
 
-import postWithFetch from "../../utils/hooks/postWithFetch";
+// import postWithFetch from "../../utils/hooks/postWithFetch";
 
 function CreateTask() {
     const [showInputs, setShowInputs] = useState(false);
@@ -47,21 +47,6 @@ function CreateTaskInputs() {
               //handle error
               console.log(response);
             });
-        // axios.post('http://54.180.93.113:16980/api/tasks/group', {
-        //     title,
-        //     "text": "a",
-        //     "repeat_type": 0
-        //   })
-        //   .then(function (response) {
-        //     console.log(response);
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
-        // postWithFetch({
-        //     url: 'http://54.180.93.113:16980/api/tasks',
-        //     token:'1', 
-        //     body:{"title": title}})
     };
 
     return (
