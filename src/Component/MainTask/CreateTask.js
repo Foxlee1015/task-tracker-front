@@ -35,7 +35,7 @@ function CreateTaskInputs() {
 
         axios({
             method: "post",
-            url: "http://54.180.93.113:16980/api/tasks/group",
+            url: `${process.env.REACT_APP_API_URL}/tasks/group`,
             data: bodyFormData,
             headers: { "Content-Type": "multipart/form-data" },
           })

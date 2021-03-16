@@ -1,29 +1,29 @@
 import React from "react";
+import { Route, useRouteMatch} from "react-router-dom";
 
 import CreateTask from "./CreateTask";
-
-import useFetch from "../../utils/hooks/useFetch";
+import ListTask from "./ListTask";
+import MainTaskGroup from "../MainTaskGroup/MainTaskGroup";
 
 
 function MainTask() {
-  const [data, loading] = useFetch("http://54.180.93.113:16980/api/tasks/");
+  const match = useRouteMatch();
+
   return (
     <div>
-      <p>MainTask</p>
-      <CreateTask />
-      {loading ? (
-          "Loading..."
-      ) : (
-          <ul>
-          {data && data.map(({ id, url, description }) => (
-              <li key={`url-${id}`}>
-                  <a href={url}>{description}</a>
-              </li>
-          ))}
-          </ul>
-      )}
+      <Route exact path={`${match.url}/`} component={MainTaskHome} />
     </div>
   );
 }
 export default MainTask;
-  
+
+
+function MainTaskHome() {
+  return (
+    <div>
+      <p>MainTask</p>
+      <CreateTask />
+      <ListTask />
+    </div>
+  );
+}
