@@ -82,7 +82,7 @@ function SignIn() {
     e.preventDefault();
     initSumbit();
 
-    const endpoint = 'tokens'
+    const endpoint = 'tokens/'
     const formData = new FormData();
     formData.append('username', username); 
     formData.append('password', password);
