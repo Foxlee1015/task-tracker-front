@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 
+import CircularProgress from '@material-ui/core/CircularProgress';
 import useFetch from "../../utils/hooks/useFetch";
 
 
@@ -13,7 +14,7 @@ function MainTaskGroup({match}) {
   return (
     <div>
       {loading ? (
-          "Loading..."
+          <CircularProgress />
       ) : (
           <ul>
           {data && (

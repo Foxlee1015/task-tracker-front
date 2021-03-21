@@ -1,4 +1,7 @@
 import React from "react";
+
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import useFetch from "../../utils/hooks/useFetch";
 
 function MainLink() {
@@ -7,7 +10,7 @@ function MainLink() {
       <div>
         <p>MainLink</p>
         {loading ? (
-            "Loading..."
+            <CircularProgress />
         ) : (
             <ul>
             {data.map(({ id, url, description }) => (

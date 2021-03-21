@@ -1,16 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 import { DataGrid } from '@material-ui/data-grid';
 import useFetch from "../../utils/hooks/useFetch";
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 function ListTask() {
   const [data, loading] = useFetch(`${process.env.REACT_APP_API_URL}/tasks`);
+
   return (
     <div>
       {loading ? (
-          "Loading..."
+          <CircularProgress />
       ) : (
           <ul>
           {/* {data && data.map(({ id, group_id, title, text }) => (
@@ -37,7 +40,7 @@ const columns = [
     type: 'number',
     width: 160,
   },
-  { field: 'datetime', headerName: 'Datetime', width: 130 },
+  { field: 'datetime', headerName: 'Datetime', width: 200 },
 ];
 
 function DataTable({data}) {

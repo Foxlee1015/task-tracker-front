@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from "react";
 
-import TextField from '@material-ui/core/TextField';
-
 import InputBasic from "../../Common/Input/InputBasic";
 import CreateTaskInputDate from "./CreateTaskInputDate";
 import CreateTaskInputRepeatType from "./CreateTaskInputRepeatType";
@@ -52,7 +50,7 @@ function CreateTaskInputs() {
       const responseCallback = function (response) {
           if (response.status === 201) {
             console.log(response);
-            // window.location.reload();
+            window.location.reload();
           }
       };
 

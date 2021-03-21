@@ -14,12 +14,12 @@ const InputBasic = ({
     type = "text",
 }) => {  
 
-    const handleKeyEvent = (e) => {
-        if (e.key === "Enter") {
-            handleBlur()
-            keyEnterEvent();
-        }
-    };
+    // const handleKeyEvent = (e) => {
+    //     if (e.key === "Enter") {
+    //         handleBlur()
+    //         keyEnterEvent();
+    //     }
+    // };
 
 
     return (
