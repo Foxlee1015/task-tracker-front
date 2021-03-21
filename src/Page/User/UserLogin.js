@@ -19,19 +19,7 @@ import { indigo } from '@material-ui/core/colors';
 
 import { apiPostCall } from "../../utils/apicall"; 
 import AlertSnackbar from "../../Common/Feedback/AlertSnackbar";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="http://task-tracker.foxlee.kr">
-        Task-tracker
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from "../../Common/Copyright";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -94,13 +82,14 @@ function SignIn() {
     e.preventDefault();
     initSumbit();
 
+    const endpoint = 'tokens'
     const formData = new FormData();
     formData.append('username', username); 
     formData.append('password', password);
 
     const responseCallback = function (response) {
         if (response.status === 201) {
-            localStorage.setItem('token', response.data.result);
+            localStorage.setItem('token', `bearer ${response.data.result}`);
             history.push('/main')
         }
     };
@@ -117,6 +106,7 @@ function SignIn() {
     const finalCallback = finishSumbit;
 
     apiPostCall({
+        endpoint,
         formData,
         responseCallback,
         failCallback,

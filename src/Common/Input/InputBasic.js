@@ -1,4 +1,5 @@
 import React from "react";
+import TextField from '@material-ui/core/TextField';
 
 
 const InputBasic = ({
@@ -20,15 +21,21 @@ const InputBasic = ({
         }
     };
 
-    // useEffect(() => {
-    //     if (value) {
-    //         handleBlur()
-    //     }
-    // }, []);
 
     return (
         <div>
-            <input
+            <TextField
+                inputRef={ref}
+                id="standard-textarea"
+                label={placeholder}
+                placeholder={placeholder}
+                type={type}
+                value={value}
+                onChange={e=>setValue(e.target.value)}
+                autoFocus
+                multiline
+            />
+            {/* <input
                 ref={ref}
                 value={value}
                 type={type}
@@ -37,7 +44,7 @@ const InputBasic = ({
                 onBlur={e=>handleBlur()}
                 onKeyPress={handleKeyEvent}
                 placeholder={placeholder}
-            ></input>
+            ></input> */}
             <div>
                 {/* <label>{placeholder}</label> */}
             </div>
