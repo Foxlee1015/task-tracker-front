@@ -83,23 +83,23 @@ function SignUp() {
     e.preventDefault();
     initSumbit();
 
-    const endpoint = 'tokens/'
+    const endpoint = 'users/'
     const formData = new FormData();
-    formData.append('username', username); 
-    formData.append('password', password);
+    formData.append('name', username); 
+    formData.append('password', password); 
+    formData.append('password_confirm', passwordConfirm);
 
     const responseCallback = function (response) {
         if (response.status === 201) {
-            localStorage.setItem('token', `bearer ${response.data.result}`);
-            history.push('/main')
+            history.push('/user/login')
         }
     };
 
     const failCallback = function (res) {
     if (res.response === undefined) {
         setSnackbarOpen(true);
-    } else if (res.response.status === 404) {
-        setUsernameError("Check your id");
+    } else if (res.response.status === 409) {
+        setUsernameError("User name already exists");
     } else if (res.response.status === 400) {
         setPasswordError("Check your password");
     }};
