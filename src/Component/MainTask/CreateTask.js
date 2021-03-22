@@ -8,24 +8,59 @@ import CreateTaskSelectLinks from "./CreateTaskSelectLinks";
 import { apiPostCall } from "../../utils/apicall";
 import { getDateTime } from "../../utils/utils";
 
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 function CreateTask() {
+    const classes = useStyles();
     const [showInputs, setShowInputs] = useState(false);
     return (
         <div>
-            <button 
-                onClick={e=>setShowInputs(!showInputs)}
-            >
-                {showInputs? "Close" : "Create a New task"}    
-            </button>
+            <Button onClick={e=>setShowInputs(true)} color="primary">Create a New task</Button>
             <div>
-                {showInputs && <CreateTaskInputs />}
+                {showInputs && (
+                  <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={showInputs}
+                    onClose={e=>setShowInputs(false)}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                      timeout: 500,
+                    }}
+                  >
+                    <Fade in={showInputs}>
+                      <div className={classes.paper}>
+                        <h2 id="transition-modal-title">New task</h2>
+                        <p id="transition-modal-description">Creat a new task</p>
+                        <CreateTaskInputs />
+                      </div>
+                    </Fade>
+                  </Modal>)}
             </div>
-
         </div>
   );
 }
 export default CreateTask;
-
 
 function CreateTaskInputs() {
     const [title, setTitle] = useState("");
@@ -124,9 +159,8 @@ function CreateTaskInputs() {
         <CreateTaskInputRepeatType repeatType={repeatType} setRepeatType={setRepeatType} />
         <CreateTaskInputDate selectedDate={startDate} setSelectedDate={setStartDate} label="Task Start date" />
         {repeatType !== 0 && <CreateTaskInputDate selectedDate={endDate} setSelectedDate={setEndDate} label="Task end date" />}
-        <button 
-            onClick={e=>handleSubmit()}
-        >Finish</button>
+        <Button onClick={e=>handleSubmit()} color="primary">Create</Button>
+            
       </div>
     );
 }
