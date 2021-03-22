@@ -1,3 +1,5 @@
+import withRoot from './Page/withRoot';
+
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Home from "./Page/Home/Home";
@@ -12,7 +14,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Header />
-        <div>
+        <div style={{marginTop:64}}>
           <Switch>
             <Route exact path='/' component={Home} /> {/* 로그인 전  */}
             <Route path='/main' component={Main} /> {/* 로그인 후  */}
@@ -25,4 +27,4 @@ function App() {
   );
 }
 
-export default App;
+export default withRoot(App);

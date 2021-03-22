@@ -1,12 +1,14 @@
+import React from 'react';
 
+import HomeBanner from "./HomeBanner";
+import HomeHowTaskWorks from "./HomeHowTaskWorks";
 
-function Home() {
+export default function Home() {
     return (
-      <div>
-        <p>Home</p>
-      </div>
+      <React.Fragment>
+        <HomeBanner />
+        <HomeHowTaskWorks />
+      </React.Fragment>
     );
   }
-  
-  export default Home;
   
