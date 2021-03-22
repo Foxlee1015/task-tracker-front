@@ -7,11 +7,11 @@ const InputBasic = ({
     value,
     setValue,
     placeholder,
-    className = "input",
     handleBlur = () => {},
     keyEnterEvent = () => {},
     errMsg = "",
     type = "text",
+    autoFocus = false,
 }) => {  
 
     // const handleKeyEvent = (e) => {
@@ -32,8 +32,10 @@ const InputBasic = ({
                 type={type}
                 value={value}
                 onChange={e=>setValue(e.target.value)}
-                autoFocus
+                autoFocus={autoFocus}
                 multiline
+                helperText={errMsg}
+                error={errMsg !== ""}
             />
             {/* <input
                 ref={ref}

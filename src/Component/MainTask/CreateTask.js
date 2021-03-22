@@ -64,11 +64,23 @@ export default CreateTask;
 
 function CreateTaskInputs() {
     const [title, setTitle] = useState("");
+    const [titleError, setTitleError] = useState("");
     const [text, setText] = useState("");
+    const [textError, setTextError] = useState("");
     const [startDate, setStartDate] = useState(getDateTime());
     const [endDate, setEndDate] = useState("");
     const [repeatType, setRepeatType] = useState(0);
     const [selectedlinks, setSelectedLinks] = useState([]);
+    
+    const [submitOpen, setSubmitOpen] = useState(false);
+
+    useEffect(()=>{
+      if (title === "" || text === "") {
+        setSubmitOpen(false);
+      } else {
+        setSubmitOpen(true);
+      }
+    }, [title, text])
 
     const handleSubmit = () => {
 
@@ -148,6 +160,7 @@ function CreateTaskInputs() {
             value={title} 
             setValue={setTitle} 
             placeholder="Title"
+            autoFocus={true}
         />
         <InputBasic
             value={text} 
@@ -159,7 +172,7 @@ function CreateTaskInputs() {
         <CreateTaskInputRepeatType repeatType={repeatType} setRepeatType={setRepeatType} />
         <CreateTaskInputDate selectedDate={startDate} setSelectedDate={setStartDate} label="Task Start date" />
         {repeatType !== 0 && <CreateTaskInputDate selectedDate={endDate} setSelectedDate={setEndDate} label="Task end date" />}
-        <Button onClick={e=>handleSubmit()} color="primary">Create</Button>
+        <Button disabled={!submitOpen} onClick={e=>handleSubmit()} color="primary">Create</Button>
             
       </div>
     );
