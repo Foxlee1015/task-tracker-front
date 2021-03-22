@@ -16,6 +16,7 @@ import Container from '@material-ui/core/Container';
 import { indigo } from '@material-ui/core/colors';
 
 import { apiPostCall } from "../../utils/apicall"; 
+import useTextField from "../../Common/Input/useTextField";
 import AlertSnackbar from "../../Common/Feedback/AlertSnackbar";
 import Copyright from "../../Common/Copyright";
 
@@ -54,12 +55,11 @@ const useStyles = makeStyles((theme) => ({
 function SignUp() {
   const classes = useStyles();
   const history = useHistory();
-  const [username, setUsername] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [passwordConfirmError, setPasswordConfirmError] = useState("");
+
+  const usernameTextField = useTextField({id:"username", label:"Username", autoFocus:true});
+  const passwordTextField = useTextField({id:"password", label:"Password", autoComplete: "current-password"});
+  const passwordConfirmTextField = useTextField({id:"password", label: "Confirm Password", autoComplete: "current-password"});
+
   const [isSubmitOpen, setIsSubmitOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -68,8 +68,9 @@ function SignUp() {
     setIsSubmitOpen(false);
     setLoading(true);
 
-    setUsernameError("");
-    setPasswordError("");
+    usernameTextField.setHelperText("");
+    passwordTextField.setHelperText("");
+    passwordConfirmTextField.setHelperText("");
   }
   
   const finishSumbit = () => {
@@ -83,9 +84,9 @@ function SignUp() {
 
     const endpoint = 'users/'
     const formData = new FormData();
-    formData.append('name', username); 
-    formData.append('password', password); 
-    formData.append('password_confirm', passwordConfirm);
+    formData.append('name', usernameTextField.value); 
+    formData.append('password', passwordTextField.value); 
+    formData.append('password_confirm', passwordConfirmTextField.value);
 
     const responseCallback = function (response) {
         if (response.status === 201) {
@@ -97,9 +98,9 @@ function SignUp() {
     if (res.response === undefined) {
         setSnackbarOpen(true);
     } else if (res.response.status === 409) {
-        setUsernameError("User name already exists");
+        usernameTextField.setHelperText("User name already exists");
     } else if (res.response.status === 400) {
-        setPasswordError("Check your password");
+        passwordTextField.setHelperText("Check your password");
     }};
 
     const finalCallback = finishSumbit;
@@ -114,25 +115,23 @@ function SignUp() {
     })
 }
   useEffect(()=>{
-    if (username === "" || password === "") {
+    if (usernameTextField.value === "" || passwordTextField.value === "") {
         setIsSubmitOpen(false);
-    } else if (password !== passwordConfirm){
+    } else if (passwordTextField.value !== passwordConfirmTextField.value){
         setIsSubmitOpen(false);
-        if (passwordConfirm !== "") {
-          setPasswordConfirmError("Password and Confirm password have to match")
+        if (passwordConfirmTextField.value !== "") {
+          passwordConfirmTextField.setHelperText("Password and Confirm password have to match");
         }
     } else {
-      setPasswordConfirmError("");
+      passwordConfirmTextField.setHelperText("");
       setIsSubmitOpen(true);
     }
-  }, [username, password, passwordConfirm])
+  }, [usernameTextField, passwordTextField, passwordConfirmTextField])
 
-  
   const handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
       return
     }
-
     setSnackbarOpen(false);
   };
 
@@ -148,51 +147,15 @@ function SignUp() {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            value={username}
-            onChange={e=>setUsername(e.target.value)}
-            helperText={usernameError}
-            error={usernameError !== ""}
+            {...usernameTextField}
           />
           <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={e=>setPassword(e.target.value)}
-            helperText={passwordError}
-            error={passwordError !== ""}
-            disabled={username === ""}
+            {...passwordTextField}
+            disabled={usernameTextField.value === ""}
           />
           <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Confirm Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={passwordConfirm}
-            onChange={e=>setPasswordConfirm(e.target.value)}
-            helperText={passwordConfirmError}
-            error={passwordConfirmError !== ""}
-            disabled={password === ""}    
+            {...passwordConfirmTextField}
+            disabled={passwordTextField.value === ""}    
           />
           <div className={classes.wrapper}>
             <Button
@@ -225,11 +188,8 @@ function SignUp() {
   );
 }
 
-function UserJoin() {
+export default function UserJoin() {
     return (
           <SignUp />
     );
-  }
-  
-export default UserJoin;
-  
+}

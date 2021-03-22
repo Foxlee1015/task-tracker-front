@@ -23,7 +23,6 @@ const InputBasic = ({
 
 
     return (
-        <div>
             <TextField
                 inputRef={ref}
                 id="standard-textarea"
@@ -37,21 +36,6 @@ const InputBasic = ({
                 helperText={errMsg}
                 error={errMsg !== ""}
             />
-            {/* <input
-                ref={ref}
-                value={value}
-                type={type}
-                className={className}
-                onChange={e=>setValue(e.target.value)}
-                onBlur={e=>handleBlur()}
-                onKeyPress={handleKeyEvent}
-                placeholder={placeholder}
-            ></input> */}
-            <div>
-                {/* <label>{placeholder}</label> */}
-            </div>
-            <p>{errMsg}</p>
-        </div>
     );
 };
 
