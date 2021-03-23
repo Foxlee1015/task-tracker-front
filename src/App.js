@@ -21,10 +21,12 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(()=> {
-    if (user !== null) {
+    if (user === null) {
+      setUser(getUserInfoFromToken());
+    } else {
       dispatch(registerUserInfoInStore(user));
     }
-  }, [user, dispatch])
+  }, [user, dispatch]);
 
   return (
     <div className="App">
