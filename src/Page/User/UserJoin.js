@@ -16,7 +16,7 @@ import Container from '@material-ui/core/Container';
 import { indigo } from '@material-ui/core/colors';
 
 import { apiPostCall } from "../../utils/apicall"; 
-import { useTextField } from "../../Common/Input/InputBasic";
+import { useTextField, useHelperText } from "../../Common/Input/InputBasic";
 import AlertSnackbar from "../../Common/Feedback/AlertSnackbar";
 import Copyright from "../../Common/Copyright";
 
@@ -57,8 +57,11 @@ function SignUp() {
   const history = useHistory();
 
   const usernameTextField = useTextField({id:"username", label:"Username", autoFocus:true});
+  const usernameHelperText = useHelperText();
   const passwordTextField = useTextField({id:"password", label:"Password", autoComplete: "current-password"});
-  const passwordConfirmTextField = useTextField({id:"password", label: "Confirm Password", autoComplete: "current-password"});
+  const passwordHelperText = useHelperText();
+  const passwordConfirmTextField = useTextField({id:"passwordConfirm", label: "Confirm Password", autoComplete: "current-password"});
+  const passwordConfirmHelperText = useHelperText();
 
   const [isSubmitOpen, setIsSubmitOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -68,9 +71,9 @@ function SignUp() {
     setIsSubmitOpen(false);
     setLoading(true);
 
-    usernameTextField.setHelperText("");
-    passwordTextField.setHelperText("");
-    passwordConfirmTextField.setHelperText("");
+    usernameHelperText.setHelperText("");
+    passwordHelperText.setHelperText("");
+    passwordConfirmHelperText.setHelperText("");
   }
   
   const finishSumbit = () => {
@@ -98,9 +101,9 @@ function SignUp() {
     if (res.response === undefined) {
         setSnackbarOpen(true);
     } else if (res.response.status === 409) {
-        usernameTextField.setHelperText("User name already exists");
+        usernameHelperText.setHelperText("User name already exists");
     } else if (res.response.status === 400) {
-        passwordTextField.setHelperText("Check your password");
+      passwordHelperText.setHelperText("Check your password");
     }};
 
     const finalCallback = finishSumbit;
@@ -120,10 +123,10 @@ function SignUp() {
     } else if (passwordTextField.value !== passwordConfirmTextField.value){
         setIsSubmitOpen(false);
         if (passwordConfirmTextField.value !== "") {
-          passwordConfirmTextField.setHelperText("Password and Confirm password have to match");
+          passwordConfirmHelperText.setHelperText("Password and Confirm password have to match");
         }
     } else {
-      passwordConfirmTextField.setHelperText("");
+      passwordConfirmHelperText.setHelperText("");
       setIsSubmitOpen(true);
     }
   }, [usernameTextField, passwordTextField, passwordConfirmTextField])
@@ -148,13 +151,20 @@ function SignUp() {
         <form className={classes.form} noValidate>
           <TextField
             {...usernameTextField}
+            error={usernameHelperText.helperText!== ""}
+            helperText={usernameHelperText.helperText}
           />
           <TextField
             {...passwordTextField}
+            error={passwordHelperText.helperText!== ""}
+            helperText={passwordHelperText.helperText}
             disabled={usernameTextField.value === ""}
+            
           />
           <TextField
             {...passwordConfirmTextField}
+            error={passwordConfirmHelperText.helperText!== ""}
+            helperText={passwordConfirmHelperText.helperText}
             disabled={passwordTextField.value === ""}    
           />
           <div className={classes.wrapper}>

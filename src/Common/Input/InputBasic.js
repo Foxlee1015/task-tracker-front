@@ -41,9 +41,8 @@ const InputBasic = ({
 
 export default InputBasic;
 
-export const useTextField = ({id, label, initvalue="", initErrMsg="", autoComplete="", autoFocus=false}) => {
+export const useTextField = ({id, label, initvalue="", autoComplete="", autoFocus=false}) => {
     const [value, setValue] = useState(initvalue);
-    const [helperText, setHelperText] = useState(initErrMsg);
   
     return {
         id,
@@ -57,9 +56,15 @@ export const useTextField = ({id, label, initvalue="", initErrMsg="", autoComple
         margin: "normal",
         required: true,
         fullWidth: true,
-        helperText,
-        error: helperText !== "",
         autoComplete,
-        setHelperText
     };
 };
+
+export const useHelperText = ({initErrMsg=""}={}) => {
+    const [helperText, setHelperText] = useState(initErrMsg);
+
+    return {
+        helperText,
+        setHelperText
+    }
+}

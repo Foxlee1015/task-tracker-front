@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import withRoot from './Page/withRoot';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
+
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Home from "./Page/Home/Home";
@@ -11,27 +12,13 @@ import Header from "./Component/Header/Header";
 
 import AuthRoute from "./Auth/AuthRoute";
 
+import { getUserInfoFromToken } from "./utils/utils";
+
 import './App.css';
 
 function App() {
-  const dispatch = useDispatch();
-  const { userToken } = useSelector(
-    state => ({
-      userToken: state.user,
-    }),
-    shallowEqual
-  );
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(getUserInfoFromToken());
   const authenticated = user != null;
-
-  useEffect(()=>{
-    const token = localStorage.getItem('token');
-    if (token !== null && token !== undefined) {
-      // validateToken();
-      dispatch({type:"VALIDATE_TOKEN_REQUEST"});
-      console.log(userToken);
-    }
-  }, []);
 
   return (
     <div className="App">
@@ -51,7 +38,7 @@ function App() {
             path="/admin"
             render={props => <Main user={user} {...props} />}
           />
-            <Route path='/admin' component={Main} /> */}
+            <Route path='/admin' component={Main} />
           </Switch>
         </div>
       </BrowserRouter>

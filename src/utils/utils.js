@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 export function getDateTime({add_year=0, add_month=0}={}) {
     const now     = new Date(); 
     let year    = now.getFullYear();
@@ -32,4 +34,23 @@ export function getDateTime({add_year=0, add_month=0}={}) {
     }   
     const dateTime = `${year}-${month}-${day}T${hour}:${minute}`;
     return dateTime;
+}
+
+export function getUserInfoFromToken() {
+     try {
+          const jsonWebToken = localStorage.getItem('token');
+          const token = jsonWebToken.split(' ')[1];
+          const decodedToken=jwt.decode(token, {complete: true});
+          console.log(decodedToken);
+          const dateNow = new Date();
+
+          if(decodedToken.exp < dateNow.getTime()) { // expired
+               return null;
+          } else {
+               return decodedToken;
+          }
+     } catch (error) {
+          console.error(error);
+          return null;
+     }
 }
