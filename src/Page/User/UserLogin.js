@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -20,6 +21,7 @@ import { indigo } from '@material-ui/core/colors';
 import { apiPostCall } from "../../utils/apicall"; 
 import AlertSnackbar from "../../Common/Feedback/AlertSnackbar";
 import Copyright from "../../Common/Copyright";
+import {getUserByToken} from "../../redux/user/user";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 export default function UserLogin() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [password, setPassword] = useState("");
@@ -64,6 +67,8 @@ export default function UserLogin() {
   const [isSubmitOpen, setIsSubmitOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const [tokenIssued, setTokenIssued] = useState(false);
 
   const initSumbit = () => {
     setIsSubmitOpen(false);
@@ -78,6 +83,13 @@ export default function UserLogin() {
     setLoading(false);  
   }
 
+  useEffect(()=>{
+    if (tokenIssued) {
+      dispatch(getUserByToken());
+      history.push('/');
+    };
+  },[tokenIssued, dispatch, history])
+
   const handleSubmit = (e) => {
     e.preventDefault();
     initSumbit();
@@ -90,7 +102,8 @@ export default function UserLogin() {
     const responseCallback = function (response) {
         if (response.status === 201) {
             localStorage.setItem('token', `bearer ${response.data.result}`);
-            history.push('/main')
+            setTokenIssued(true);
+            // history.push('/')
         }
     };
 
@@ -113,7 +126,8 @@ export default function UserLogin() {
         finalCallback
 
     })
-}
+  }
+
   useEffect(()=>{
     if (username === "" || password === "") {
         setIsSubmitOpen(false);

@@ -41,16 +41,15 @@ export function getUserInfoFromToken() {
           const jsonWebToken = localStorage.getItem('token');
           const token = jsonWebToken.split(' ')[1];
           const decodedToken=jwt.decode(token, {complete: true});
-          console.log(decodedToken);
           const dateNow = new Date();
 
           if(decodedToken.exp < dateNow.getTime()) { // expired
                return null;
           } else {
-               return decodedToken;
+               return decodedToken.payload;
           }
      } catch (error) {
-          console.error(error);
+          // console.error(error);
           return null;
      }
 }

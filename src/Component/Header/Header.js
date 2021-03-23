@@ -1,56 +1,13 @@
-// import React from 'react';
-// import { Link } from "react-router-dom";
-
-// import { makeStyles } from '@material-ui/core/styles';
-// import AppBar from '@material-ui/core/AppBar';
-// import Toolbar from '@material-ui/core/Toolbar';
-// import Typography from '@material-ui/core/Typography';
-// import Button from '@material-ui/core/Button';
-// import IconButton from '@material-ui/core/IconButton';
-// import MenuIcon from '@material-ui/icons/Menu';
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     flexGrow: 1,
-//   },
-//   menuButton: {
-//     marginRight: theme.spacing(2),
-//   },
-//   title: {
-//     flexGrow: 1,
-//   },
-// }));
-
-// export default function Header() {
-//   const classes = useStyles();
-
-//   return (
-//     <div className={classes.root}>
-//       <AppBar position="static">
-//         <Toolbar>
-//           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-//             <MenuIcon />
-//           </IconButton>
-//             <Typography variant="h6" className={classes.title}>
-//               Task Tracker
-//             </Typography>
-//           <Button color="inherit"><Link to="/">Home</Link></Button>
-//           <Button color="inherit"><Link to="/user/login">Sign in</Link></Button>
-//           <Button color="inherit"><Link to="/user/join">Sign up</Link></Button>
-//           <Button color="inherit"><Link to="/main">Main</Link></Button>
-//         </Toolbar>
-//       </AppBar>
-//     </div>
-//   );
-// }
-
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+
 
 const styles = (theme) => ({
   title: {
@@ -80,39 +37,70 @@ const styles = (theme) => ({
 function Header(props) {
   const { classes } = props;
 
+  const userInfo = useSelector(
+    state => (state.user)
+  );
+
+  const handleLogOut = (e) => {
+    localStorage.removeItem('token');
+  }
+
+  const headerLinkParams = {
+    variant:"h6",
+    underline:"none",
+    color:"inherit"
+  }
+
   return (
     <div>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           <div className={classes.left} />
           <Link
-            variant="h6"
-            underline="none"
-            color="inherit"
+            {...headerLinkParams}
             className={classes.title}
             href="/"
           >
             {'Task Tracker'}
           </Link>
-          <div className={classes.right}>
-            <Link
-              color="inherit"
-              variant="h6"
-              underline="none"
-              className={classes.rightLink}
-              href="/user/login/"
-            >
-              {'Sign In'}
-            </Link>
-            <Link
-              variant="h6"
-              underline="none"
-              className={clsx(classes.rightLink)}
-              href="/user/join"
-            >
-              {'Sign Up'}
-            </Link>
-          </div>
+          {userInfo.name === null ? (
+              <div className={classes.right}>
+                <Link
+                  {...headerLinkParams}
+                  className={classes.rightLink}
+                  href="/user/login/"
+                >
+                  {'Sign In'}
+                </Link>
+                <Link
+                  variant="h6"
+                  underline="none"
+                  className={clsx(classes.rightLink)}
+                  href="/user/join"
+                >
+                  {'Sign Up'}
+                </Link>
+              </div>
+          ):(
+            <div className={classes.right}>
+              <Link            
+                {...headerLinkParams}
+                className={classes.rightLink}
+                href="/main"
+              >
+                {'Task'}
+              </Link>
+              <Link
+                {...headerLinkParams}
+                className={clsx(classes.rightLink)}
+                href="/"
+                onClick={e=>handleLogOut()}
+              >
+                {'Log out'}
+              </Link>
+            </div>
+
+          )}
         </Toolbar>
       </AppBar>
       <div className={classes.placeholder} />

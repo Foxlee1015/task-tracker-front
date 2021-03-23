@@ -129,7 +129,7 @@ function SignUp() {
       passwordConfirmHelperText.setHelperText("");
       setIsSubmitOpen(true);
     }
-  }, [usernameTextField, passwordTextField, passwordConfirmTextField])
+  }, [usernameTextField, passwordTextField, passwordConfirmTextField, passwordConfirmHelperText])
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
