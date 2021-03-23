@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignIn() {
+export default function UserLogin({setUser}) {
   const classes = useStyles();
   const history = useHistory();
   const [username, setUsername] = useState("");
@@ -90,6 +90,7 @@ function SignIn() {
     const responseCallback = function (response) {
         if (response.status === 201) {
             localStorage.setItem('token', `bearer ${response.data.result}`);
+            setUser(username);
             history.push('/main')
         }
     };
@@ -212,12 +213,3 @@ function SignIn() {
     </Container>
   );
 }
-
-function UserLogin() {
-    return (
-          <SignIn />
-    );
-  }
-  
-  export default UserLogin;
-  

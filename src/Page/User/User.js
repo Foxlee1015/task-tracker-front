@@ -6,12 +6,12 @@ import UserJoin from "./UserJoin";
 import UserFindIdInfo from "./UserFindIdInfo";
 import UserFindPwInfo from "./UserFindPwInfo";
 
-function User() {
+function User({setUser}) {
     const match = useRouteMatch();
 
     return (
         <React.Fragment>
-          <Route exact path={`${match.url}/login`} component={UserLogin} />
+          <Route exact path={`${match.url}/login`} render={()=> <UserLogin setUser={setUser} />} />
           <Route path={`${match.url}/join`} component={UserJoin} />
           <Route path={`${match.url}/findIdinfo`} component={UserFindIdInfo} />
           <Route path={`${match.url}/findPwinfo`} component={UserFindPwInfo} />

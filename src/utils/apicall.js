@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const apiPostCall = ({endpoint, formData, responseCallback, failCallback, finalCallback}) => {
+export const apiPostCall = ({endpoint, formData=null, responseCallback=()=>{}, failCallback=()=>{}, finalCallback=()=>{}}) => {
     axios({
         method: "post",
         url: `${process.env.REACT_APP_API_URL}/${endpoint}`,
