@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import withRoot from './Page/withRoot';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -9,36 +10,28 @@ import User from "./Page/User/User";
 import Header from "./Component/Header/Header";
 
 import AuthRoute from "./Auth/AuthRoute";
-import { apiPostCall } from "./utils/apicall"
 
 import './App.css';
 
 function App() {
+  const dispatch = useDispatch();
+  const { userToken } = useSelector(
+    state => ({
+      userToken: state.user,
+    }),
+    shallowEqual
+  );
   const [user, setUser] = useState(null);
   const authenticated = user != null;
 
   useEffect(()=>{
     const token = localStorage.getItem('token');
     if (token !== null && token !== undefined) {
-      validateToken();
+      // validateToken();
+      dispatch({type:"VALIDATE_TOKEN_REQUEST"});
+      console.log(userToken);
     }
   }, []);
-
-  
-  const validateToken = () => {
-    const endpoint = 'tokens/validate';
-    const responseCallback = function (response) {
-        if (response.status === 200) {
-            setUser(response.data.result);
-        }
-    };
-
-    apiPostCall({
-        endpoint,
-        responseCallback,
-    })
-}
-
 
   return (
     <div className="App">
