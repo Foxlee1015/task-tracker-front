@@ -4,13 +4,12 @@ function useFetch(url) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const headers = {
-        "Authorization": localStorage.getItem('token')
-    }
-    console.log(headers);
     useEffect(() => {
         async function fetchUrl() {
-            const response = await fetch(url, {headers});                
+            const response = await fetch(url, {
+                headers: {
+                    "Authorization": localStorage.getItem('token')
+                }});                
             const json = await response.json();
             console.log(json);
             setData(json.result);
