@@ -3,10 +3,14 @@ import { useState, useEffect } from "react";
 function useFetch(url) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+
+    const headers = {
+        "Authorization": localStorage.getItem('token')
+    }
+    console.log(headers);
     useEffect(() => {
         async function fetchUrl() {
-            const response = await fetch(url);
+            const response = await fetch(url, {headers});                
             const json = await response.json();
             console.log(json);
             setData(json.result);
