@@ -16,7 +16,7 @@ function Main() {
         <Link to={`${match.url}/task-group`}>task-gorup</Link>
         
         <Route exact path={`${match.url}/tasks`} component={MainTask} />
-        <Route path={`${match.url}/task-group/:task_group_id`} component={MainTaskGroup} />
+        <Route path={`${match.url}/task-group`} component={MainTaskGroup} />
         <Route path={`${match.url}/links`} component={MainLink} />
       </div>
     );
