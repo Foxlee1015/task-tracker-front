@@ -50,7 +50,13 @@ function DataTable() {
       <div className={classes.progressBox}>
         {loading && <CircularProgress />}
       </div>
-        <DataGrid rows={data} columns={columns} pageSize={5} checkboxSelection />
+        <DataGrid 
+          rows={data} 
+          columns={columns} 
+          pageSize={5} 
+          checkboxSelection
+          onRowSelected={(row)=>{
+            console.log(row);}} />
     </div>
   );
 }
