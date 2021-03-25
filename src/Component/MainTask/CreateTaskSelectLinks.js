@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   
 
 export default function CreateTaskSelectLinks({setSelectedLinks}) {
-    const [links, loading] = useFetch(`${process.env.REACT_APP_API_URL}/links`);
+    const [links, loading] = useFetch(`${process.env.REACT_APP_API_URL}/links/`);
     const classes = useStyles();
     const [checked, setChecked] = useState([]);
     const handleToggle = (value) => () => {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-function useFetch(url, defaultValue=[]) {
-    const [data, setData] = useState(defaultValue);
+function useFetch(url) {
+    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -13,14 +13,14 @@ function useFetch(url, defaultValue=[]) {
             const json = await response.json();
             console.log(json);
             if (json.result === null) {
-                setData(defaultValue);
+                setData([]);
             } else {
                 setData(json.result);
             };
             setLoading(false);
         }
         fetchUrl();
-    }, [url, defaultValue]);
+    }, [url]);
     return [data, loading];
 }
 
