@@ -11,10 +11,15 @@ function AlertSnackbar({
     open=false, 
     handleClose=()=>{},
     autoHideDuration=6000,
-    severity="success"}) 
+    severity="success"})
     {
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return
+        }
+    };
     return (
-        <Snackbar open={open} autoHideDuration={autoHideDuration} onClose={handleClose}>
+        <Snackbar open={open} autoHideDuration={autoHideDuration} onClose={handleSnackbarClose}>
             <Alert onClose={handleClose} severity={severity}>
                 Server Error
             </Alert>

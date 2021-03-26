@@ -136,13 +136,6 @@ export default function UserLogin() {
     }
   }, [username, password])
 
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setSnackbarOpen(false);
-  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -222,7 +215,7 @@ export default function UserLogin() {
       <Box mt={8}>
         <Copyright />
       </Box>
-      <AlertSnackbar open={snackbarOpen} handleClose={handleSnackbarClose} severity="error" />
+      <AlertSnackbar open={snackbarOpen} handleClose={setSnackbarOpen} severity="error" />
     </Container>
   );
 }

@@ -60,7 +60,7 @@ function SignUp() {
   const usernameHelperText = useHelperText();
   const passwordTextField = useTextField({id:"password", label:"Password", autoComplete: "current-password"});
   const passwordHelperText = useHelperText();
-  const passwordConfirmTextField = useTextField({id:"passwordConfirm", label: "Confirm Password", autoComplete: "current-password"});
+  const passwordConfirmTextField = useTextField({id:"password", label: "Confirm Password", autoComplete: "current-password"});
   const passwordConfirmHelperText = useHelperText();
 
   const [isSubmitOpen, setIsSubmitOpen] = useState(false);
