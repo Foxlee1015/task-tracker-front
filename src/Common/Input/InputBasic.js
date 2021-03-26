@@ -45,7 +45,7 @@ export const useTextField = ({id, label, initvalue="", autoComplete="", autoFocu
     const [value, setValue] = useState(initvalue);
   
     return {
-        id,
+        id : `${id}-${Math.random().toString(36).substring(7)}`,
         label,
         type: id,
         name: id,
