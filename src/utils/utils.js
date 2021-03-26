@@ -43,13 +43,12 @@ export function getUserInfoFromToken() {
           const decodedToken=jwt.decode(token, {complete: true});
           const dateNow = new Date();
 
-          if(decodedToken.exp < dateNow.getTime()) { // expired
+          if((decodedToken.payload.exp)*1000 < dateNow.getTime()) { // expired
                return null;
           } else {
                return decodedToken.payload;
           }
      } catch (error) {
-          // console.error(error);
           return null;
      }
 }
