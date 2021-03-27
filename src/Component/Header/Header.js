@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -37,9 +36,6 @@ const styles = (theme) => ({
 
 function Header(props) {
   const { classes } = props;
-  
-  const location = useLocation();
-  console.log(location.pathname);
 
   const userInfo = useSelector(
     state => (state.user)
@@ -49,25 +45,23 @@ function Header(props) {
     localStorage.removeItem('token');
   }
 
-
   return (
     <div>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
-          <div className={classes.left} />
+          <div className={classes.left} >
+          <HeaderLink
+            className={classes.rightLink}
+            href="/"
+            text="Home"
+          />
+          </div>
           <HeaderLink
             className={classes.title}
             href="/"
             text="Task Tracker"
           />
           <div className={classes.right}>
-            {location.pathname !== "/" && (
-              <HeaderLink
-                className={classes.rightLink}
-                href="/"
-                text="Home"
-              />
-            )}
           {userInfo.name === null ? (
               <React.Fragment>
                 <HeaderLink

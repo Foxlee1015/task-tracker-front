@@ -34,7 +34,9 @@ function App() {
         <Header />
         <div style={{marginTop:64}}>
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path="/"
+              render={props => <Home user={user} {...props} />}
+            />
           <AuthRoute
             authenticated={!authenticated}
             redirect="/"

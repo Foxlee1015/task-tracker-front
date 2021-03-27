@@ -86,7 +86,6 @@ export default function UserLogin() {
   useEffect(()=>{
     if (tokenIssued) {
       dispatch(getUserByToken());
-      history.push('/');
     };
   },[tokenIssued, dispatch, history])
 
@@ -103,7 +102,6 @@ export default function UserLogin() {
         if (response.status === 201) {
             localStorage.setItem('token', `bearer ${response.data.result}`);
             setTokenIssued(true);
-            // history.push('/')
         }
     };
 
