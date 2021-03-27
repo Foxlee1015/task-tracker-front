@@ -19,10 +19,9 @@ export default MainTask;
 
 function MainTaskHome() {
   return (
-    <div>
-      <p>MainTask</p>
+    <>
       <CreateTask />
       <ListTask />
-    </div>
+    </>
   );
 }

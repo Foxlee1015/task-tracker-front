@@ -76,6 +76,9 @@ function SignUp() {
     passwordConfirmHelperText.setHelperText("");
   }
   
+  // var regType1 = /^[A-Za-z0-9+]*$/;
+
+  
   const finishSumbit = () => {
     setIsSubmitOpen(true);
     setLoading(false);  

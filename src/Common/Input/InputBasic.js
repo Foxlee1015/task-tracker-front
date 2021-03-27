@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 
 
 const InputBasic = ({
+    id = "standard-textarea",
     ref = null,
     value,
     setValue,
@@ -12,6 +13,8 @@ const InputBasic = ({
     errMsg = "",
     type = "text",
     autoFocus = false,
+    multiline = false,
+    rowsMax = 1,
 }) => {  
 
     // const handleKeyEvent = (e) => {
@@ -25,7 +28,7 @@ const InputBasic = ({
     return (
             <TextField
                 inputRef={ref}
-                id="standard-textarea"
+                id={id}
                 label={placeholder}
                 placeholder={placeholder}
                 type={type}
@@ -33,6 +36,7 @@ const InputBasic = ({
                 onChange={e=>setValue(e.target.value)}
                 autoFocus={autoFocus}
                 multiline
+                rowsMax={rowsMax}
                 helperText={errMsg}
                 error={errMsg !== ""}
             />
@@ -41,7 +45,18 @@ const InputBasic = ({
 
 export default InputBasic;
 
-export const useTextField = ({id, label, initvalue="", autoComplete="", autoFocus=false}) => {
+export const useTextField = ({
+    id, 
+    label, 
+    initvalue="", 
+    autoComplete="", 
+    autoFocus=false,
+    variant="outlined",
+    margin="normal",
+    multiline=false,
+    rowsMax=1,
+
+}) => {
     const [value, setValue] = useState(initvalue);
   
     return {
@@ -52,11 +67,13 @@ export const useTextField = ({id, label, initvalue="", autoComplete="", autoFocu
         autoFocus,
         value,
         onChange: e=> setValue(e.target.value),
-        variant:"outlined",
-        margin: "normal",
+        variant,
+        margin,
+        multiline,
+        rowsMax,
         required: true,
         fullWidth: true,
-        autoComplete,
+        autoComplete
     };
 };
 

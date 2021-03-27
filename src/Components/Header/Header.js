@@ -10,6 +10,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 
 const styles = (theme) => ({
+  root: {
+    marginBottom: 60,
+  },
   title: {
     fontSize: 24,
   },
@@ -46,7 +49,7 @@ function Header(props) {
   }
 
   return (
-    <div>
+    <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           <div className={classes.left} >

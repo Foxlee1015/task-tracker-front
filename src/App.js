@@ -8,6 +8,7 @@ import Main from "./Pages/Main/Main";
 import User from "./Pages/User/User";
 // import NotFound from "./Pages/NotFound";
 import Header from "./Components/Header/Header";
+import Copyright from "./Common/Copyright";
 import AuthRoute from "./Auth/AuthRoute";
 
 import { getUserInfoFromToken } from "./utils/utils";
@@ -32,7 +33,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
           <Switch>
-            <div style={{marginTop:64}}>
+            <>
               <Header />
               <Route exact path="/"
                 render={props => <Home user={user} {...props} />}
@@ -57,7 +58,8 @@ function App() {
             {/* <Route component={NotFound} /> */}
             {/* <Route path="/404" component={NotFound} />
             <Redirect to="/404" /> */}
-            </div>
+            <Copyright />
+            </>
           </Switch>
       </BrowserRouter>
     </div>
