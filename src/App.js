@@ -53,12 +53,10 @@ function App() {
               path="/admin"
               render={props => <Main user={user} {...props} />}
             />
-            {/* <Route path="*"
-                render={props => <NotFound {...props} />}
-              /> */}
-              
-            <Route path="/404" component={NotFound} />
-            <Redirect to="/404" />
+            
+            {/* <Route component={NotFound} /> */}
+            {/* <Route path="/404" component={NotFound} />
+            <Redirect to="/404" /> */}
             </div>
           </Switch>
       </BrowserRouter>
