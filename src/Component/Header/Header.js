@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -36,6 +37,9 @@ const styles = (theme) => ({
 
 function Header(props) {
   const { classes } = props;
+  
+  const location = useLocation();
+  console.log(location.pathname);
 
   const userInfo = useSelector(
     state => (state.user)
@@ -45,62 +49,54 @@ function Header(props) {
     localStorage.removeItem('token');
   }
 
-  const headerLinkParams = {
-    variant:"h6",
-    underline:"none",
-    color:"inherit"
-  }
 
   return (
     <div>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           <div className={classes.left} />
-          <Link
-            {...headerLinkParams}
+          <HeaderLink
             className={classes.title}
             href="/"
-          >
-            {'Task Tracker'}
-          </Link>
+            text="Task Tracker"
+          />
+          <div className={classes.right}>
+            {location.pathname !== "/" && (
+              <HeaderLink
+                className={classes.rightLink}
+                href="/"
+                text="Home"
+              />
+            )}
           {userInfo.name === null ? (
-              <div className={classes.right}>
-                <Link
-                  {...headerLinkParams}
+              <React.Fragment>
+                <HeaderLink
                   className={classes.rightLink}
                   href="/user/login/"
-                >
-                  {'Sign In'}
-                </Link>
-                <Link
-                  variant="h6"
-                  underline="none"
+                  text="Sign In"
+                />
+                <HeaderLink
                   className={clsx(classes.rightLink)}
                   href="/user/join"
-                >
-                  {'Sign Up'}
-                </Link>
-              </div>
+                  text="Sign Up"
+                 />
+              </React.Fragment>
           ):(
-            <div className={classes.right}>
-              <Link            
-                {...headerLinkParams}
+            <React.Fragment>
+              <HeaderLink            
                 className={classes.rightLink}
                 href="/main"
-              >
-                {'Task'}
-              </Link>
-              <Link
-                {...headerLinkParams}
+                text="Task"
+              />
+              <HeaderLink
                 className={clsx(classes.rightLink)}
                 href="/"
                 onClick={e=>handleLogOut()}
-              >
-                {'Log out'}
-              </Link>
-            </div>
-
+                text="Log out"
+              />
+            </React.Fragment>
           )}
+          </div>
         </Toolbar>
       </AppBar>
       <div className={classes.placeholder} />
@@ -113,3 +109,25 @@ Header.propTypes = {
 };
 
 export default withStyles(styles)(Header);
+
+
+const HeaderLink = ({
+  variant="h6",
+  underline="none",
+  color="inherit",
+  className,
+  href="/",
+  text="",
+  onClick=()=>{},
+}) => {
+  return (
+    <Link
+      variant={variant}
+      underline={underline}
+      color={color}
+      className={className}
+      href={href}
+      onClick={onClick}
+    >{text}</Link>
+  )
+}
