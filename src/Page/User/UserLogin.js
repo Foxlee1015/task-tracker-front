@@ -86,6 +86,7 @@ export default function UserLogin() {
   useEffect(()=>{
     if (tokenIssued) {
       dispatch(getUserByToken());
+      history.push('/');
     };
   },[tokenIssued, dispatch, history])
 
