@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import withRoot from './Pages/withRoot';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Home from "./Pages/Home/Home";
 import Main from "./Pages/Main/Main";
 import User from "./Pages/User/User";
-import NotFound from "./Pages/NotFound";
+// import NotFound from "./Pages/NotFound";
 import Header from "./Components/Header/Header";
 import AuthRoute from "./Auth/AuthRoute";
 
