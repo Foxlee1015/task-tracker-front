@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
-function useFetch(url) {
+function useFetch(api_url) {
+    const [url, setUrl] = useState(api_url);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -19,9 +20,18 @@ function useFetch(url) {
             };
             setLoading(false);
         }
-        fetchUrl();
+        if (url !== "") {
+            fetchUrl();
+        }
     }, [url]);
-    return [data, loading];
+
+    const reFetch = () => {
+        setLoading(true);
+        const curretUrl = url;
+        setUrl("");
+        setUrl(curretUrl);
+    }
+    return [data, loading, reFetch];
 }
 
 export default useFetch;
