@@ -1,9 +1,9 @@
 import { Route, useRouteMatch } from "react-router-dom";
 
-import MainHome from "../../Component/MainHome/MainHome";
-import MainTask from "../../Component/MainTask/MainTask";
-import MainLink from "../../Component/MainLink/MainLink";
-import MainTaskGroup from "../../Component/MainTaskGroup/MainTaskGroup";
+import MainHome from "../../Components/MainHome/MainHome";
+import MainTask from "../../Components/MainTask/MainTask";
+import MainLink from "../../Components/MainLink/MainLink";
+import MainTaskGroup from "../../Components/MainTaskGroup/MainTaskGroup";
 
 function Main() {
     const match = useRouteMatch();

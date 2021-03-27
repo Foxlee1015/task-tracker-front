@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import withRoot from './Page/withRoot';
+import withRoot from './Pages/withRoot';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import Home from "./Page/Home/Home";
-import Main from "./Page/Main/Main";
-import User from "./Page/User/User";
-import Header from "./Component/Header/Header";
-
+import Home from "./Pages/Home/Home";
+import Main from "./Pages/Main/Main";
+import User from "./Pages/User/User";
+import NotFound from "./Pages/NotFound";
+import Header from "./Components/Header/Header";
 import AuthRoute from "./Auth/AuthRoute";
 
 import { getUserInfoFromToken } from "./utils/utils";
@@ -31,31 +31,36 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
-        <div style={{marginTop:64}}>
           <Switch>
-            <Route exact path="/"
-              render={props => <Home user={user} {...props} />}
+            <div style={{marginTop:64}}>
+              <Header />
+              <Route exact path="/"
+                render={props => <Home user={user} {...props} />}
+              />
+            <AuthRoute
+              authenticated={!authenticated}
+              redirect="/"
+              path="/user"
+              render={props => <User user={user} {...props} />}
             />
-          <AuthRoute
-            authenticated={!authenticated}
-            redirect="/"
-            path="/user"
-            render={props => <User user={user} {...props} />}
-          />
-          <AuthRoute
-            authenticated={authenticated}
-            path="/main"
-            render={props => <Main user={user} {...props} />}
-          />
-          <AuthRoute
-            authenticated={authenticated}
-            path="/admin"
-            render={props => <Main user={user} {...props} />}
-          />
-            <Route path='/admin' component={Main} />
+            <AuthRoute
+              authenticated={authenticated}
+              path="/main"
+              render={props => <Main user={user} {...props} />}
+            />
+            <AuthRoute
+              authenticated={authenticated}
+              path="/admin"
+              render={props => <Main user={user} {...props} />}
+            />
+            {/* <Route path="*"
+                render={props => <NotFound {...props} />}
+              /> */}
+              
+            <Route path="/404" component={NotFound} />
+            <Redirect to="/404" />
+            </div>
           </Switch>
-        </div>
       </BrowserRouter>
     </div>
   );
