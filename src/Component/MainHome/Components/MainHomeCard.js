@@ -3,78 +3,68 @@ import { Link, useRouteMatch } from "react-router-dom";
 import {
     Box,
     Card,
+    CardHeader,
     CardContent,
-    Grid,
-    Typography
+    CardActions,
+    CircularProgress,
+    Fab,
+    Tooltip,
+    Typography,
   } from '@material-ui/core';
-  import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-  import { red } from '@material-ui/core/colors';
-  import CircularProgress from '@material-ui/core/CircularProgress';
-
+  import { makeStyles } from '@material-ui/core/styles';
+  import EditIcon from '@material-ui/icons/Edit';
   import useFetch from "../../../utils/hooks/useFetch";
   
+  const useStyles = makeStyles({
+  root: {
+    marginTop: 20,
+    marginBottom: 20,
+    minWidth: 275,
+  },
+  box: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});
+
   const MainHomeCard = ({
     title="",
     link="",
     fetchUrlEndpoint=""
   }) => {
+    const classes = useStyles();
     const match = useRouteMatch();
     const [data, loading] = useFetch(`${process.env.REACT_APP_API_URL}/${fetchUrlEndpoint}`, []);
 
     return (
-      <Card>
+      <Card className={classes.root}>
+        <CardHeader
+          title={title}
+          subheader="September 14, 2016"
+        />
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-            sx={{ justifyContent: 'space-between' }}
-          >
-            <Grid item>
-              <Link to={`${match.url}/${link}`}>
-                <Typography
-                  color="textSecondary"
-                  gutterBottom
-                  variant="h6"
-                >
-                  {title}
-                </Typography>
-              </Link>
-              
-              <Typography
-                color="textPrimary"
-                variant="h3"
-              >
-                {loading ? (<CircularProgress />) : data.length}
-              </Typography>
-            </Grid>
-            <Grid item>
-            </Grid>
-          </Grid>
-          <Box
-            sx={{
-              pt: 2,
-              display: 'flex',
-              alignItems: 'center'
-            }}
-          >
-            <ArrowDownwardIcon sx={{ color: red[900] }} />
-            <Typography
-              sx={{
-                color: red[900],
-                mr: 1
-              }}
-              variant="body2"
-            >
-              12%
+          <Typography color="textPrimary" variant="h3">
+            {loading ? (<CircularProgress />) : data.length}
+          </Typography>
+          <Box className={classes.box}>
+            <Typography variant="body2">
+              ~~~
             </Typography>
-            <Typography
-              color="textSecondary"
-              variant="caption"
-            >
-              Since last month
+            <Typography color="textSecondary" variant="caption">
+              ~~~
             </Typography>
           </Box>
         </CardContent>
+        <CardActions className={classes.box}>
+          <Link to={`${match.url}/${link}`}>
+            <Tooltip title="Edit" interactive>
+              <Fab color="primary" size="small" >
+                <EditIcon />
+              </Fab>
+            </Tooltip>
+          </Link>
+        </CardActions>
       </Card>
     );
   } 
