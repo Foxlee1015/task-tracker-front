@@ -29,9 +29,6 @@ export default function ListTask() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  useEffect(()=> {
-    console.log(selectedRows);
-  }, [selectedRows])
 
   const handleClickCheck = (row) => {
     const checked = row.checked === 0 ? 1 : 0;
@@ -50,34 +47,17 @@ export default function ListTask() {
       failCallback,
     })
   }
-  
-  const handleSelectionModelChange = ({selectionModel}) => {
-    setSelectedRows(selectionModel);
-  }
 
   const handleCellClick = (cell) => {
-    console.log(cell);
     if (cell.field === "checked") {
       handleClickCheck(cell.row);
     }
-  }
-
-  const handleSelectedRows = (row) => {
-    const task_id = row.data.id
-    const curSelectedRows = selectedRows;
-    if (row.isSelected) {
-        curSelectedRows.indexOf(task_id) === -1 && curSelectedRows.push(task_id)
-    } else {
-      curSelectedRows.splice(curSelectedRows.indexOf(task_id), 1)    
-    }
-    setSelectedRows(curSelectedRows);
   }
 
   const handleDelete = (e) => {
     e.preventDefault();
     console.log(selectedRows);
   }
-  
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -88,7 +68,6 @@ export default function ListTask() {
             checked={params.row.checked === 1 ? true : false}
             color="primary"
             inputProps={{ 'aria-label': 'secondary checkbox' }}
-            
         />
         )
       }
@@ -114,17 +93,17 @@ export default function ListTask() {
             columns={columns} 
             pageSize={5} 
             checkboxSelection
+            disableSelectionOnClick={true} // have to click the select checkbox not the row to select
             onSelectionModelChange={(row)=>{
-              handleSelectionModelChange(row)
-            }}
-            onRowSelected={(row)=>{
-              handleSelectedRows(row)}}
-            onCellClick={(row)=>{
-              handleCellClick(row);
-            }} 
-              />
+              setSelectedRows(row.selectionModel)}}
+            onCellClick={(row)=>{handleCellClick(row)}}
+          />
       </div>
-      <Button onClick={e=>handleDelete(e)} color="primary">Delete</Button>
+      <Button 
+        onClick={e=>handleDelete(e)} 
+        disabled={selectedRows.length===0} 
+        color="primary">Delete
+      </Button>
     </div>
     
   );
