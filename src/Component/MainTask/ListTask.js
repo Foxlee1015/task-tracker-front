@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import { DataGrid } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 
@@ -28,23 +27,19 @@ export default function ListTask() {
   const [data, loading, reFetch] = useFetch(`${process.env.REACT_APP_API_URL}/tasks/`, []);  
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [updateLoading, setUpdateLoading] = useState(false);
 
 
   const handleClickCheck = (row) => {
+    setUpdateLoading(true);
     const checked = row.checked === 0 ? 1 : 0;
     const endpoint = `tasks/${row.id}?checked=${checked}`;
 
-    const failCallback = () => {
-      setSnackbarOpen(true);
-    }
-    const responseCallback = () => {
-      reFetch();
-    }
-
     apiPostCall({
       endpoint,
-      responseCallback,
-      failCallback,
+      responseCallback: () => reFetch(),
+      failCallback: () => setSnackbarOpen(true),
+      finalCallback: () => setUpdateLoading(false)
     })
   }
 
@@ -85,19 +80,17 @@ export default function ListTask() {
     <div>
       <div className={classes.DataBox}>
         <AlertSnackbar open={snackbarOpen} handleClose={setSnackbarOpen} severity="error" />
-        <div className={classes.progressBox}>
-          {loading && <CircularProgress />}
-        </div>
-          <DataGrid 
-            rows={data} 
-            columns={columns} 
-            pageSize={5} 
-            checkboxSelection
-            disableSelectionOnClick={true} // have to click the select checkbox not the row to select
-            onSelectionModelChange={(row)=>{
-              setSelectedRows(row.selectionModel)}}
-            onCellClick={(row)=>{handleCellClick(row)}}
-          />
+        <DataGrid
+          loading={loading || updateLoading}
+          rows={data} 
+          columns={columns} 
+          pageSize={5} 
+          checkboxSelection
+          disableSelectionOnClick={true} // have to click the select checkbox not the row to select
+          onSelectionModelChange={(row)=>{
+            setSelectedRows(row.selectionModel)}}
+          onCellClick={(row)=>{handleCellClick(row)}}
+        />
       </div>
       <Button 
         onClick={e=>handleDelete(e)} 
