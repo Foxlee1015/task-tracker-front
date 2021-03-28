@@ -8,7 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,7 +17,6 @@ import { indigo } from '@material-ui/core/colors';
 import { apiPostCall } from "../../utils/apicall"; 
 import { useTextField, useHelperText } from "../../Common/Input/InputBasic";
 import AlertSnackbar from "../../Common/Feedback/AlertSnackbar";
-import Copyright from "../../Common/Copyright";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -76,9 +74,28 @@ function SignUp() {
     passwordConfirmHelperText.setHelperText("");
   }
   
-  // var regType1 = /^[A-Za-z0-9+]*$/;
+  useEffect(()=>{
+    var regPassword = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,16}$/;
+    if (passwordTextField.value !=="" && !regPassword.test(passwordTextField.value)) {
+      passwordHelperText.setHelperText("Password must include at least a number, an upper, a lower case letters and a symbol(8~16 letters)");
+    } else {
+      passwordHelperText.setHelperText("")
+    }
+  }, [passwordTextField.value, passwordHelperText])
 
   
+  useEffect(()=>{
+    const regUsername = /^[A-Za-z0-9+]{4,12}$/;
+    if (usernameTextField.value !=="") {
+      if (!regUsername.test(usernameTextField.value)) {
+        usernameHelperText.setHelperText("English(at least 3 letters) and numbers only(4~12 letters)");
+      } else {
+        usernameHelperText.setHelperText("")
+      }
+    }
+  }, [usernameTextField.value, usernameHelperText])
+
+
   const finishSumbit = () => {
     setIsSubmitOpen(true);
     setLoading(false);  
@@ -156,6 +173,10 @@ function SignUp() {
             {...usernameTextField}
             error={usernameHelperText.helperText!== ""}
             helperText={usernameHelperText.helperText}
+            onBlur={()=>{
+              if(usernameTextField.value ==="") {
+                  usernameHelperText.setHelperText("Can not be empty.")
+              }}}
           />
           <TextField
             {...passwordTextField}
@@ -168,7 +189,7 @@ function SignUp() {
             {...passwordConfirmTextField}
             error={passwordConfirmHelperText.helperText!== ""}
             helperText={passwordConfirmHelperText.helperText}
-            disabled={passwordTextField.value === ""}    
+            disabled={passwordTextField.value === "" || usernameTextField.value === ""}    
           />
           <div className={classes.wrapper}>
             <Button
@@ -177,7 +198,10 @@ function SignUp() {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                disabled={!isSubmitOpen}
+                disabled={!isSubmitOpen 
+                  || passwordConfirmHelperText.helperText!== "" 
+                  || passwordHelperText.helperText!== "" 
+                  || passwordConfirmHelperText.helperText!== ""}
                 onClick={e=>handleSubmit(e)}
             >
                 Sign up
@@ -193,9 +217,6 @@ function SignUp() {
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
       <AlertSnackbar open={snackbarOpen} handleClose={handleSnackbarClose} severity="error" />
     </Container>
   );

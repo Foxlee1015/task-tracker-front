@@ -55,7 +55,6 @@ export const useTextField = ({
     margin="normal",
     multiline=false,
     rowsMax=1,
-
 }) => {
     const [value, setValue] = useState(initvalue);
   
@@ -77,11 +76,14 @@ export const useTextField = ({
     };
 };
 
-export const useHelperText = ({initErrMsg=""}={}) => {
+export const useHelperText = ({
+    initErrMsg="", 
+}={}) => {
     const [helperText, setHelperText] = useState(initErrMsg);
 
     return {
         helperText,
-        setHelperText
+        setHelperText,
+        error: helperText !== ""
     }
 }
