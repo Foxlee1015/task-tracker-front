@@ -5,10 +5,8 @@ import {
     CardHeader,
     CardContent,
     CardActions,
-    CircularProgress,
     Fab,
     Tooltip,
-    Typography,
   } from '@material-ui/core';
   import { makeStyles } from '@material-ui/core/styles';
   import EditIcon from '@material-ui/icons/Edit';
@@ -44,10 +42,7 @@ import {
           subheader={subheader}
         />
         <CardContent>
-          <Typography color="textPrimary" variant="h3">
-            {loading ? (<CircularProgress />) : data.length}
-          </Typography>
-          {SubComponent && <SubComponent data={data}/>}
+          {SubComponent && <SubComponent loading={loading} data={data}/>}
         </CardContent>
         <CardActions className={classes.box}>
           <Link to={`${match.url}/${link}`}>

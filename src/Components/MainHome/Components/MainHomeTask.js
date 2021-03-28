@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {
     Box,
+    CircularProgress,
     Typography,
   } from '@material-ui/core';
 
-import {formatDate} from "../../utils/utils";
+import {formatDate} from "../../../utils/utils";
   
-export default function MainHomeTask({data}) {
+export default function MainHomeTask({data, loading}) {
     const [taskCountToday, setTaskCountToday] = useState(0);
     const [taskCountThisMonth, setTaskCountThisMonth] = useState(0);
 
@@ -30,11 +31,17 @@ export default function MainHomeTask({data}) {
   
     return (
         <Box>
+            <Typography color="textPrimary" variant="h5">
+                Today's tasks
+            </Typography>
+            <Typography color="textPrimary" variant="h3">
+                {loading ? (<CircularProgress />) : taskCountToday}
+            </Typography>
             <Typography variant="body2">
-                Today's task : {taskCountToday}
+                This month's tasks : {taskCountThisMonth}
             </Typography>
             <Typography color="textSecondary" variant="caption">
-                This month's task : {taskCountThisMonth}
+                Total Takss {data.length}
             </Typography>
         </Box>
     );
