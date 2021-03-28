@@ -68,8 +68,6 @@ export default function UserLogin() {
   const [loading, setLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const [tokenIssued, setTokenIssued] = useState(false);
-
   const initSumbit = () => {
     setIsSubmitOpen(false);
     setLoading(true);
@@ -83,12 +81,6 @@ export default function UserLogin() {
     setLoading(false);  
   }
 
-  useEffect(()=>{
-    if (tokenIssued) {
-      dispatch(getUserByToken());
-      history.push('/');
-    };
-  },[tokenIssued, dispatch, history])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -102,7 +94,8 @@ export default function UserLogin() {
     const responseCallback = function (response) {
         if (response.status === 201) {
             localStorage.setItem('token', `bearer ${response.data.result}`);
-            setTokenIssued(true);
+            dispatch(getUserByToken());
+            history.push('/');
         }
     };
 

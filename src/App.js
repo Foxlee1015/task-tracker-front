@@ -34,8 +34,14 @@ function App() {
       <BrowserRouter>
           <Switch>
             <>
-              <Header />
-              <Route exact path="/"
+            <Header />
+            <Route exact path="/"
+              render={props => <Home user={user} {...props} />}
+            />
+            <AuthRoute
+                authenticated={!authenticated}
+                redirect="/main"
+                path="/home"
                 render={props => <Home user={user} {...props} />}
               />
             <AuthRoute
