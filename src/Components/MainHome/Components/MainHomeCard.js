@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import {
-    Box,
     Card,
     CardHeader,
     CardContent,
@@ -23,15 +22,16 @@ import {
   },
   box: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent:'center'
   }
 });
 
   const MainHomeCard = ({
     title="",
     link="",
-    fetchUrlEndpoint=""
+    fetchUrlEndpoint="",
+    subheader="",
+    SubComponent=null
   }) => {
     const classes = useStyles();
     const match = useRouteMatch();
@@ -41,20 +41,13 @@ import {
       <Card className={classes.root}>
         <CardHeader
           title={title}
-          subheader="September 14, 2016"
+          subheader={subheader}
         />
         <CardContent>
           <Typography color="textPrimary" variant="h3">
             {loading ? (<CircularProgress />) : data.length}
           </Typography>
-          <Box className={classes.box}>
-            <Typography variant="body2">
-              ~~~
-            </Typography>
-            <Typography color="textSecondary" variant="caption">
-              ~~~
-            </Typography>
-          </Box>
+          {SubComponent && <SubComponent data={data}/>}
         </CardContent>
         <CardActions className={classes.box}>
           <Link to={`${match.url}/${link}`}>

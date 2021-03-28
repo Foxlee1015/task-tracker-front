@@ -2,25 +2,33 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
 import MainHomeCard from "./Components/MainHomeCard";
+import MainHomeTask from "./MainHomeTask";
 
+import {formatDate} from "../../utils/utils";
 
 export default function MainHome() {
 
     const mainHomeCards = [
         {
-            title: "Task Group",
-            fetchUrlEndpoint: "tasks/groups",
-            link: "task-group",     
-        },
-        {
             title: "Task",
             fetchUrlEndpoint: "tasks/",
-            link: "tasks",            
+            subheader: formatDate(new Date()),
+            link: "tasks", 
+            SubComponent: MainHomeTask,           
+        },
+        {
+            title: "Task Group",
+            subheader: "",
+            fetchUrlEndpoint: "tasks/groups",
+            link: "task-group",
+            SubComponent: null,   
         },
         {
             title: "link",
+            subheader: "",
             fetchUrlEndpoint: "links/",
-            link: "links",            
+            link: "links",    
+            SubComponent: null,        
         }
     ]
   
@@ -28,11 +36,7 @@ export default function MainHome() {
         <Grid container justify="center" spacing={6}>
             {mainHomeCards.map((card)=>(
                 <Grid key={card.title} item>
-                    <MainHomeCard 
-                        title={card.title}
-                        fetchUrlEndpoint={card.fetchUrlEndpoint}
-                        link={card.link}
-                    />
+                    <MainHomeCard {...card}/>
                 </Grid>
             ))}
         </Grid>
