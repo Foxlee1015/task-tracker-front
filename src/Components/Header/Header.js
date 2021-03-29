@@ -55,7 +55,7 @@ function Header(props) {
           <div className={classes.left} >
           <HeaderLink
             className={classes.rightLink}
-            href="/"
+            href="/home"
             text="Home"
           />
           </div>
