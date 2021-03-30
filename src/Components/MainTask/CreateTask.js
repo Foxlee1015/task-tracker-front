@@ -142,21 +142,25 @@ function CreateTaskInputs() {
           setEndDate("");
           break;
         case 1:
-          newEndDate = getDateTime({add_month:3});
+          newEndDate = getDateTime({addMonth:3});
           setEndDate(newEndDate);
           break;
         case 2:
-          newEndDate = getDateTime({add_month:9});
+          newEndDate = getDateTime({addMonth:9});
           setEndDate(newEndDate);
           break;
         case 3:
-          newEndDate = getDateTime({add_year:3});
+          newEndDate = getDateTime({addYear:3});
           setEndDate(newEndDate);
           break;
         case 4:
-          newEndDate = getDateTime({add_month:6});
+          newEndDate = getDateTime({addMonth:6});
           setEndDate(newEndDate);
           break;
+        case 5:
+          newEndDate = getDateTime({addDay:7});
+          setEndDate(newEndDate);
+            break;
         default:
           setEndDate("");
           break;

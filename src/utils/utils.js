@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken';
 
-export function getDateTime({add_year=0, add_month=0}={}) {
-    const now     = new Date(); 
+export function getDateTime({addYear=0, addMonth=0, addDay=0}={}) {
+    const now     = new Date();
+    const oldDate = new Date();
+    now.setDate(oldDate.getDate() + addDay);
     let year    = now.getFullYear();
     let month   = now.getMonth()+1; 
     let day     = now.getDate();
@@ -9,8 +11,8 @@ export function getDateTime({add_year=0, add_month=0}={}) {
     let minute  = now.getMinutes();
     let second  = now.getSeconds();
 
-    year = year + add_year;
-    month = month + add_month;
+    year += addYear;
+    month += addMonth;
 
     if (month > 12) {
          year+= 1;

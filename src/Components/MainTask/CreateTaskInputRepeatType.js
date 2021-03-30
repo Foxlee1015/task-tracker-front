@@ -37,6 +37,7 @@ function CreateTaskInputRepeatType({repeatType, setRepeatType}) {
             <MenuItem value={2}>Monthly</MenuItem>
             <MenuItem value={3}>Yearly</MenuItem>
             <MenuItem value={4}>Biweekly</MenuItem>
+            <MenuItem value={5}>Every day</MenuItem>
             </Select>
         </FormControl>
     );
