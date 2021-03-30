@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useSelector } from 'react-redux';
 import withRoot from './Pages/withRoot';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -18,7 +19,10 @@ import './App.css';
 
 function App() {
   const [user, setUser] = useState(getUserInfoFromToken());
-  const authenticated = user != null;
+  const userInfo = useSelector(
+    state => (state.user)
+  );
+  const authenticated = user != null ? true : userInfo.name != null ? true : false;
   const dispatch = useDispatch();
 
   useEffect(()=> {
@@ -43,7 +47,7 @@ function App() {
               />
             <AuthRoute
               authenticated={!authenticated}
-              redirect="/"
+              redirect="/home"
               path="/user"
               render={props => <User user={user} {...props} />}
             />
